@@ -1,5 +1,5 @@
 {
-  "name": "udacity-c2-image-filter",
+  "name": "udagram-image-filter",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -33,5 +33,8 @@
     "jimp": "^0.16.1",
     "lodash": "^4.17.15",
     "rimraf": "^3.0.2"
+  },
+  "engines": {
+    "node": "14.17.0"
   }
 }
