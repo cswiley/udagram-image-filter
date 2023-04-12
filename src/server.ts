@@ -8,7 +8,7 @@ const router: Router = Router();
 
 function requireAuth(req: Request, resp: Response, next: NextFunction) {
   // not implemented
-  console.warn("auth middleware not yet implemented");
+  // console.warn("auth middleware not yet implemented");
   return next();
 }
 
@@ -36,20 +36,11 @@ function requireAuth(req: Request, resp: Response, next: NextFunction) {
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
   /**************************************************************************** */
-
-  //! END @TODO1
-
-  // Root Endpoint
-  // Displays a simple message to the user
-  app.get("/", async (req, res) => {
-    res.send("try GET /filteredimage?image_url={{}}");
-  });
-
   app.get(
     "/filteredimage",
     requireAuth,
     async (req: Request, res: Response, next: NextFunction) => {
-      const imageUrl = req.query.image_url;
+      const imageUrl: string = req.query.image_url;
 
       // check image_url parameter exists
       if (!imageUrl) {
@@ -58,16 +49,11 @@ function requireAuth(req: Request, resp: Response, next: NextFunction) {
           .send({ message: "image_url query parameter is required" });
       }
 
-      console.log(imageUrl);
-      const savedImage: string = await filterImageFromURL(imageUrl).catch(
-        () => {
-          return "";
-        }
-      );
-
-      console.log(savedImage);
-      // check filtered image is valid
-      if (!savedImage) {
+      let savedImage: string;
+      // check and filter image URL
+      try {
+        savedImage = await filterImageFromURL(imageUrl);
+      } catch (error) {
         return res.status(400).send({ message: "invalid image url" });
       }
 
@@ -83,6 +69,13 @@ function requireAuth(req: Request, resp: Response, next: NextFunction) {
       }
     }
   );
+  //! END @TODO1
+
+  // Root Endpoint
+  // Displays a simple message to the user
+  app.get("/", async (req: Request, res: Response) => {
+    res.send("try GET /filteredimage?image_url={{}}");
+  });
 
   // Start the Server
   app.listen(port, () => {
