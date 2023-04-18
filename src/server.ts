@@ -22,46 +22,34 @@ function requireAuth(req: Request, resp: Response, next: NextFunction) {
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
 
-  // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
-  // GET /filteredimage?image_url={{URL}}
-  // endpoint to filter an image from a public url.
-  // IT SHOULD
-  //    1. validate the image_url query
-  //    2. call filterImageFromURL(image_url) to filter the image
-  //    3. send the resulting file in the response
-  //    4. deletes any files on the server on finish of the response
-  // QUERY PARAMATERS
-  //    image_url: URL of a publicly accessible image
-  // RETURNS
-  //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
-
-  /**************************************************************************** */
+  // Service endpoint for image processing
   app.get(
     "/filteredimage",
     requireAuth,
     async (req: Request, res: Response, next: NextFunction) => {
       const imageUrl: string = req.query.image_url;
 
-      // check image_url parameter exists
+      // validate image_url query parameter
       if (!imageUrl) {
         res
           .status(400)
           .send({ message: "image_url query parameter is required" });
       }
 
-      let savedImage: string;
-      // check and filter image URL
+      let filteredImage: string;
+      // filter image from url
       try {
-        savedImage = await filterImageFromURL(imageUrl);
+        filteredImage = await filterImageFromURL(imageUrl);
       } catch (error) {
         return res.status(400).send({ message: "invalid image url" });
       }
 
-      // check send file
+      // send resulting file in response
       try {
-        return res.status(200).sendFile(savedImage, (err) => {
+        return res.status(200).sendFile(filteredImage, (err) => {
           if (!err) {
-            deleteLocalFiles([savedImage]);
+            // delete file after successful response
+            deleteLocalFiles([filteredImage]);
           }
         });
       } catch (error) {

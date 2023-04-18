@@ -9,8 +9,10 @@ Node-Express microservice that creates an endpoint to filter images by running a
 4. Submit your project
     * Git repo: https://github.com/cswiley/udagram-image-filter
     * Screenshot EB Dashboard
-    [![EB Screen Shot #1][product-screenshot-1]](http://udagram-wiley-image-filter-prod.us-east-1.elasticbeanstalk.com/)
-    [![EB Screen Shot #2][product-screenshot-2]](http://udagram-wiley-image-filter-prod.us-east-1.elasticbeanstalk.com/)
+        [![EB Screen Shot #1][product-screenshot-1]](http://udagram-wiley-image-filter-prod.us-east-1.elasticbeanstalk.com/)
+
+        [![EB Screen Shot #2][product-screenshot-2]](http://udagram-wiley-image-filter-prod.us-east-1.elasticbeanstalk.com/)
+    * Endpoint URL: http://udagram-wiley-image-filter-prod.us-east-1.elasticbeanstalk.com
 
 
 
@@ -46,6 +48,6 @@ eb deploy
 ```
 
 
-<!-- Markdown references>
+<!-- Markdown references -->
 [product-screenshot-1]: images/eb-dashboard.png
 [product-screenshot-2]: images/eb-environment.png
